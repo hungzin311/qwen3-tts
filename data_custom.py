@@ -25,7 +25,7 @@ def proces_split(dataset, split_name):
         ref_path = os.path.join(wav_dir, "utt_00000.wav")
         sf.write(wav_path, audio_array, original_sample_rate)
 
-        temp_dict = {'audio': wav_path, 'text': text_content, 'ref_audio': ref_path}
+        temp_dict = {'audio': f"../{wav_path}", 'text': text_content, 'ref_audio': f"../{ref_path}"}
 
         json.dump(temp_dict, f_jsonl, ensure_ascii=False)
         f_jsonl.write("\n")
