@@ -2,6 +2,8 @@ import json
 import os 
 import soundfile as sf 
 from datasets import load_dataset, Audio 
+import torchaudio.functional as F
+import torch
 from tqdm import tqdm
 
 DATASET_NAME = "strongpear/viet_muong_merged_0_200_denoise_silence_speaker101"
@@ -21,9 +23,12 @@ def proces_split(dataset, split_name):
         audio_array = item['audio']['array']
         original_sample_rate = item['audio']['sampling_rate']
 
+        if original_sample_rate != TARGET_SAMPLE_RATE:
+            audio_array = F.resample(torch.from_numpy(audio_array), original_sample_rate, TARGET_SAMPLE_RATE).numpy()
+
         wav_path = os.path.join(wav_dir, f"{utt_id}.wav")
         ref_path = os.path.join(wav_dir, "utt_00000.wav")
-        sf.write(wav_path, audio_array, original_sample_rate)
+        sf.write(wav_path, audio_array, TARGET_SAMPLE_RATE)
 
         temp_dict = {'audio': f"../{wav_path}", 'text': text_content, 'ref_audio': f"../{ref_path}"}
 
