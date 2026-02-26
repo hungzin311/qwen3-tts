@@ -24,3 +24,4 @@ venv/
 env/
 Qwen3-TTS-12Hz-0.6B-Base/
 data/
+finetuning/model_weight/

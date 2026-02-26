@@ -2061,9 +2061,13 @@ class Qwen3TTSForConditionalGeneration(Qwen3TTSPreTrainedModel, GenerationMixin)
                 for i in range(self.config.talker_config.vocab_size - 1024, self.config.talker_config.vocab_size)
                 if i not in (self.config.talker_config.codec_eos_token_id,)
             ],
-            "output_hidden_states": getattr(kwargs, "output_hidden_states", True),
-            "return_dict_in_generate": getattr(kwargs, "return_dict_in_generate", True)
+            "output_hidden_states": kwargs.get("output_hidden_states", True),
+            "return_dict_in_generate": kwargs.get("return_dict_in_generate", True),
         }
+        # Forward optional generation arguments such as streamer/synced_gpus/stopping_criteria.
+        for k, v in kwargs.items():
+            if k not in ("output_hidden_states", "return_dict_in_generate"):
+                talker_kwargs[k] = v
         
         talker_input_embeds = [[] for _ in range(len(input_ids))]
 
