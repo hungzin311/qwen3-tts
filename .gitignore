@@ -25,3 +25,5 @@ env/
 Qwen3-TTS-12Hz-0.6B-Base/
 data/
 finetuning/model_weight/
+Qwen3-TTS-12Hz-1.7B-Base/
+Qwen3-TTS-Tokenizer-12Hz/

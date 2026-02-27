@@ -31,7 +31,7 @@ class CodecTokenStreamer(BaseStreamer):
 
 device = "cuda:0"
 tts = Qwen3TTSModel.from_pretrained(
-    "finetuning/model_weight/checkpoint-epoch-9",
+    "finetuning/model_weight/checkpoint-epoch-13",
     device_map=device,
     dtype=torch.bfloat16,
     attn_implementation="eager",
@@ -41,9 +41,8 @@ eos_token_id = tts.model.config.talker_config.codec_eos_token_id
 streamer = CodecTokenStreamer(eos_token_id=eos_token_id)
 
 wavs, sr = tts.generate_custom_voice(
-    text="hello , how are you?",
+    text="kiểm soát chất lượng sản phẩm truy xuất nguồn gốc cây trồng đồng",
     speaker="speaker_test",
-    language="English",
     non_streaming_mode=False,
     max_new_tokens=512,
     eos_token_id=eos_token_id,
